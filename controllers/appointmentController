@@ -1,0 +1,74 @@
+const connection = require('../config/db');
+
+// Create Appointment
+exports.createAppointment = (req, res) => {
+  const { patient_id, doctor_id, appointment_date, status } = req.body;
+
+  const sql = 'INSERT INTO Appointments (patient_id, doctor_id, appointment_date, status) VALUES (?, ?, ?, ?)';
+  connection.query(sql, [patient_id, doctor_id, appointment_date, status], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error creating appointment', error: err });
+    }
+    res.status(201).json({ message: 'Appointment created successfully' });
+  });
+};
+
+// Get all Appointments
+exports.getAppointments = (req, res) => {
+  const sql = 'SELECT * FROM Appointments';
+  connection.query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error fetching appointments', error: err });
+    }
+    res.status(200).json(results);
+  });
+};
+
+// Get Appointment by ID
+exports.getAppointmentById = (req, res) => {
+  const { id } = req.params;
+
+  const sql = 'SELECT * FROM Appointments WHERE appointment_id = ?';
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error fetching appointment', error: err });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+    res.status(200).json(results[0]);
+  });
+};
+
+// Update Appointment
+exports.updateAppointment = (req, res) => {
+  const { id } = req.params;
+  const { patient_id, doctor_id, appointment_date, status } = req.body;
+
+  const sql = 'UPDATE Appointments SET patient_id = ?, doctor_id = ?, appointment_date = ?, status = ? WHERE appointment_id = ?';
+  connection.query(sql, [patient_id, doctor_id, appointment_date, status, id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error updating appointment', error: err });
+    }
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+    res.status(200).json({ message: 'Appointment updated successfully' });
+  });
+};
+
+// Delete Appointment
+exports.deleteAppointment = (req, res) => {
+  const { id } = req.params;
+
+  const sql = 'DELETE FROM Appointments WHERE appointment_id = ?';
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error deleting appointment', error: err });
+    }
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+    res.status(200).json({ message: 'Appointment deleted successfully' });
+  });
+};
