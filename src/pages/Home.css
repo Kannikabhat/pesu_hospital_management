@@ -1,0 +1,18 @@
+/* Home.css */
+.home-container {
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.home-container h2 {
+    color: #007bff; /* Bootstrap primary color */
+    font-size: 32px; /* Larger font size */
+}
+
+.home-container p {
+    color: #555; /* Dark gray text for better readability */
+    font-size: 18px; /* Comfortable font size */
+}

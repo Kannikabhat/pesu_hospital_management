@@ -1,0 +1,43 @@
+/* DoctorList.css */
+.table-container {
+    margin: 20px; /* Add margin around the table */
+}
+
+table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Remove gaps between cells */
+    margin-top: 10px; /* Spacing above the table */
+}
+
+th, td {
+    padding: 12px; /* Cell padding */
+    text-align: left; /* Left align text */
+    border: 1px solid #ddd; /* Light border for table */
+}
+
+th {
+    background-color: #007bff; /* Header background color */
+    color: white; /* Header text color */
+}
+
+td button {
+    margin-right: 5px; /* Spacing between buttons */
+    background-color: #28a745; /* Green for edit button */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    padding: 5px 10px; /* Button padding */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+}
+
+td button:hover {
+    background-color: #218838; /* Darker shade on hover */
+}
+
+td button:last-child {
+    background-color: #dc3545; /* Red for delete button */
+}
+
+td button:last-child:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}

@@ -1,0 +1,102 @@
+// controllers/appointmentsController.js
+
+const db = require('../config/db'); // Assuming you're using a MySQL database
+
+// Create appointment
+exports.createAppointment = (req, res) => {
+  const { patient_id, doctor_id, appointment_date, status } = req.body;
+  const query = 'INSERT INTO appointments (patient_id, doctor_id, appointment_date, status) VALUES (?, ?, ?, ?)';
+
+  db.query(query, [patient_id, doctor_id, appointment_date, status], (err, results) => {
+    if (err) {
+      res.status(500).json({ message: 'Error creating appointment', error: err });
+    } else {
+      res.status(201).json({ message: 'Appointment created successfully' });
+    }
+  });
+};
+
+// // Get all Patients for dropdown
+exports.getPatientsForAppointment = (req, res) => {
+  const sql = 'SELECT patient_id, patient_name FROM patients';
+  db.query(sql, (err, results) => {  // Use `db` instead of `connection`
+    if (err) {
+      return res.status(500).json({ message: 'Error fetching patients', error: err });
+    }
+    res.status(200).json(results);
+  });
+};
+
+// // Get all Doctors for dropdown
+exports.getDoctorsForAppointment = (req, res) => {
+  const sql = 'SELECT doctor_id, doctor_name FROM doctors';
+  db.query(sql, (err, results) => {  // Use `db` instead of `connection`
+    if (err) {
+      return res.status(500).json({ message: 'Error fetching doctors', error: err });
+    }
+    res.status(200).json(results);
+  });
+};
+
+// Fetch all appointments
+exports.getAppointments = (req, res) => {
+  const query = 'SELECT * FROM appointments';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      res.status(500).json({ message: 'Error fetching appointments', error: err });
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+// Update appointment
+exports.updateAppointment = (req, res) => {
+  const { patient_id, doctor_id, appointment_date, status } = req.body;
+  const { id } = req.params;
+  const query = 'UPDATE appointments SET patient_id = ?, doctor_id = ?, appointment_date = ?, status = ? WHERE appointment_id = ?';
+
+  db.query(query, [patient_id, doctor_id, appointment_date, status, id], (err, results) => {
+    if (err) {
+      res.status(500).json({ message: 'Error updating appointment', error: err });
+    } else {
+      res.json({ message: 'Appointment updated successfully' });
+    }
+  });
+};
+
+// Delete appointment
+exports.deleteAppointment = (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM appointments WHERE appointment_id = ?';
+
+  db.query(query, [id], (err, results) => {
+    if (err) {
+      res.status(500).json({ message: 'Error deleting appointment', error: err });
+    } else {
+      res.json({ message: 'Appointment deleted successfully' });
+    }
+  });
+};
+
+exports.getPatientsForDoctor = (req, res) => {
+  const doctorId = req.params.doctorId;
+  
+  const sql = `
+    SELECT p.patient_id, p.patient_name 
+    FROM patients p 
+    WHERE p.patient_id IN ( 
+      SELECT a.patient_id 
+      FROM appointments a 
+      WHERE a.doctor_id = ?
+    );
+  `;
+  
+  db.query(sql, [doctorId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error fetching patients for doctor', error: err });
+    }
+    res.status(200).json(results);
+  });
+};

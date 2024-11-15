@@ -1,0 +1,17 @@
+/* Doctors.css */
+.doctors-container {
+    padding: 20px; /* Add padding */
+}
+
+.doctors-container h2 {
+    color: #007bff; /* Match navbar color */
+    font-size: 28px; /* Larger font size for the section heading */
+}
+
+.doctor-form, .doctor-list {
+    margin-top: 20px; /* Spacing above form and list */
+    background-color: #f9f9f9; /* Light background */
+    padding: 15px; /* Inner padding */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}

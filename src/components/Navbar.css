@@ -1,0 +1,35 @@
+/* Navbar.css */
+nav {
+    background-color: #007bff; /* Bootstrap primary color */
+    padding: 10px 20px; /* Add some padding */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out elements */
+    align-items: center; /* Center items vertically */
+    color: white; /* White text color */
+}
+
+nav h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 24px; /* Adjust font size */
+}
+
+nav ul {
+    list-style: none; /* Remove default list styles */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Display as a flex container */
+}
+
+nav li {
+    margin-left: 20px; /* Add spacing between items */
+}
+
+nav a {
+    color: black; /* Link color */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+nav a:hover {
+    color: #f0f0f0; /* Lighter color on hover */
+}
